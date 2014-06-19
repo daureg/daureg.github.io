@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Hello</title>
+    <script src="babylon.1.8.0.js"></script>
+    <script src="Hand.js"></script>
+    <style>
+        html, body{
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+	canvas {
+            width: 50%;
+            height: 75%;
+	    margin: 1em 25% ;
+	}
+
+    </style>
+</head>
+<body>
+
+        <canvas id="renderCanvas"></canvas>
+
+    </body>
+<script>
+    if (BABYLON.Engine.isSupported()) {
+        var canvas = document.getElementById("renderCanvas");
+        var engine = new BABYLON.Engine(canvas, true);
+
+        BABYLON.SceneLoader.Load("", "cube.babylon", engine, function (newScene) {
+            // Wait for textures and shaders to be ready
+            newScene.executeWhenReady(function () {
+                // Attach camera to canvas inputs
+                newScene.activeCamera.attachControl(canvas);
+
+                // Once the scene is loaded, just register a render loop to render it
+                engine.runRenderLoop(function() {
+                    newScene.render();
+                });
+            });
+        }, function (progress) {
+            // To do: give progress feedback to user
+        });
+    }
+</script>
+</html>
+
