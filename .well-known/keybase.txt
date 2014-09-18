@@ -1,0 +1,65 @@
+==================================================================
+https://keybase.io/daureg
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://daureg.github.io
+  * I am daureg (https://keybase.io/daureg) on keybase.
+  * I have a public key with fingerprint 36FE E335 EEF9 25D6 F9F4  BD8A 9C97 BC22 ECEF 5CBD
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "36fee335eef925d6f9f4bd8a9c97bc22ecef5cbd",
+            "host": "keybase.io",
+            "key_id": "9c97bc22ecef5cbd",
+            "uid": "7311316de0c7fa800d63248eb2f00f00",
+            "username": "daureg"
+        },
+        "service": {
+            "hostname": "daureg.github.io",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1411030319,
+    "expire_in": 157680000,
+    "prev": "15fa4d2c8cb1e1de0922dbeeed851d8c2289b666b36226baa80d298a2bf7bd92",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v1.0.3
+Comment: https://keybase.io/crypto
+
+yMHlAnicbVFbSBRRGJ4tk1oQNC1w86UJg2jTuezMziyr0IUiNCHtgpgtc+acGQdz
+Zi+zmiwmmSV0e2iFLppaCVHkg2Qk0UXCSFYFUdQEzQx9sRbE7KE06ozVQxAcOJzv
+//7v/77z9yatJew2eTg7PTMNlNj6e5bCxBHH7ewICQxYTXoiZDlavRRNV1HQH9R0
+k/SQLK8gxLIcQorIcJBXRMUFoCCJsugGMsMgGSmcDCDpJMuMkNWBZYAUQlmagTH8
+8GkQo//hh1cLbpamWZqHiJLdiiRQFORZxiUgwCgUhY9FDKGgLlUgzIZSOIhUssZJ
+YqxSk5Hl2Br8Tz1L1cyyMPhtwR80TEM2TuFqmWn6Qx6r26z2W/QqBHx/hHxA0yGO
+jjsqUTCkGTrpoTFTNjVLmXbRNMVSLC06SXTarwWRT7MYnJvHninKmoMqsSTNKZIL
+MrIgAxrROJbIMBAghKDA0VDAXyCIgOd5wPIMwwMJR4aMKEgMUNwAigxpRQvoBulh
+sU1JxZIhTdUlEwcja173nEggbHYicd0aa3mEfUPy35X+rFhP3J2tGWlpTQkQ0Usr
+8+HAnqovKcXRsYnc+a6jV7rU6M6c9l7akTrAQf1CZ0bh0ET4yehicd3WQW/T9cU2
+uxoYvhjd79vR+aEg1vIpPj59IGNpTffcLlsbvDl68tXnxv5n779f9lanx+caNndM
+9u121k6GmpSnyfc5NTnpa6y8XS7NT5p4PDMUG+w411zwfFP9x/pjiTfGV47fyvO+
+PL/N4Z3unG0tatbT3h3qfptemvDw8PacH1kjSttUHTibm7o8c2e0r3ZqfCAe38c6
+HpXHIq7ZMfDizAgRORh88C2zMLPk6jWnMjggxubz39xbbswfYmOLvQtFWxo2ju3N
+WwC/ANeeHZw=
+=mIdd
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/daureg
+
+==================================================================
