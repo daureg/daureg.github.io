@@ -1,0 +1,28 @@
+html {
+	background: #F9FCF9;
+	color: #333;
+	font-size: 18pt;
+	line-height: 1.5;
+}
+body {
+	margin: 1em auto;
+	width: 48em;
+	max-width: 85%;
+}
+h1 {
+	text-align: center;
+}
+h1, h2 {
+	font-family: serif;
+}
+a {
+	color: DodgerBlue;
+}
+img {
+	width: 48em;
+	max-width: 48em;
+	margin: .5em auto;
+}
+table {
+	margin: .5em auto;
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="default.css">
+</head>
+<body>
+<h1 id="finding-similar-neighborhoods-across-cities">Finding similar neighborhoods across cities</h1>
+<h2 id="problem">Problem</h2>
+<p>Arriving in a new city can be slightly disorienting. It's part of the charm yet as creatures of habit, one would like to rely on what one has learned previously. Thus we developed a method that enable tourists and newcomers to quickly spot areas of interest which bear similarity with neighborhoods they know from their own town. Beside, it can be used by the authorities to better understand urban landscape.</p>
+<h2 id="data">Data</h2>
+<p>This similarities are based on people activity, currently extracted from Foursquare data. Foursquare is a location based social network that lets its users announce to the world when they <em>check-ins</em> in various <em>venues</em>. <em>As of August 2014, this is now done trough a separate application named <a href="https://en.wikipedia.org/wiki/Swarm_%28app%29">Swarm</a>.</em> In addition to traditional hotel and airport, venues include many places like restaurants, parks or museum.</p>
+<p>The map below shows in which cities we collected our 5 millions check-ins and 340,000 venues, whose breakdown is detailed in the following table:</p>
+<table>
+<caption>Repartition of collected data (in thousands)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">City</th>
+<th style="text-align: left;">Check-ins</th>
+<th style="text-align: left;">Venues</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">New York</td>
+<td style="text-align: left;">1145</td>
+<td style="text-align: left;">67.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Los Angeles</td>
+<td style="text-align: left;">426</td>
+<td style="text-align: left;">33.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chicago</td>
+<td style="text-align: left;">344</td>
+<td style="text-align: left;">26.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">San Francisco</td>
+<td style="text-align: left;">478</td>
+<td style="text-align: left;">15.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">London</td>
+<td style="text-align: left;">276</td>
+<td style="text-align: left;">23.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Washington</td>
+<td style="text-align: left;">448</td>
+<td style="text-align: left;">13.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seattle</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: left;">9.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Amsterdam</td>
+<td style="text-align: left;">82</td>
+<td style="text-align: left;">8.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Houston</td>
+<td style="text-align: left;">107</td>
+<td style="text-align: left;">13.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Atlanta</td>
+<td style="text-align: left;">107</td>
+<td style="text-align: left;">8.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Paris</td>
+<td style="text-align: left;">309</td>
+<td style="text-align: left;">17.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stockholm</td>
+<td style="text-align: left;">89</td>
+<td style="text-align: left;">4.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Indianapolis</td>
+<td style="text-align: left;">69</td>
+<td style="text-align: left;">7.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moscow</td>
+<td style="text-align: left;">426</td>
+<td style="text-align: left;">48.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Barcelona</td>
+<td style="text-align: left;">228</td>
+<td style="text-align: left;">11.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Berlin</td>
+<td style="text-align: left;">176</td>
+<td style="text-align: left;">11.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Saint Louis</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">3.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rome</td>
+<td style="text-align: left;">108</td>
+<td style="text-align: left;">7.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prague</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">5.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Helsinki</td>
+<td style="text-align: left;">43</td>
+<td style="text-align: left;">3.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: left;">5054</td>
+<td style="text-align: left;">341.0</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="map.png" alt="Cities included in our dataset with font size proportional to abundance of data" /><figcaption>Cities included in our dataset with font size proportional to abundance of data</figcaption>
+</figure>
+<h2 id="method">Method</h2>
+<p>We described neighborhoods by the set of venues they contain <em>(, as check-in don't carry semantic by themselves)</em>. In turn, venues are represented by a handful of features to characterise which kind of activity they host. Some are provided by Foursquare, like how many user visited the place, how do they liked it and its category (to distinguish between French restaurants and clothes stores). Others are extracted from our data.</p>
+<p>For instance, it's natural to consider the time of day at which check-ins occurs. At city scale, they follow an expected pattern, although it displays some local shift <em>(whose interpretation is left to the reader)</em>.</p>
+<figure>
+<img src="daytime.png" alt="Check-in frequency trough the day" /><figcaption>Check-in frequency trough the day</figcaption>
+</figure>
+<p><em>Here I was hoping to include a animated map displaying check-ins as the day progresses but it will take some time to create and it has arguable interest</em></p>
+<p>More interestingly, if we focus on the time profile of each venue, we can cluster them in 6 classes. This clustering is consistent across all 20 cities and separates venues by the time of their peak activity (Restaurant vs Night Club)</p>
+<figure>
+<img src="timecluster.png" alt="Clustering result in Paris" /><figcaption>Clustering result in Paris</figcaption>
+</figure>
+<p><em>again I was planning an additional map showing all the Paris venues colored by their time class. This one should require less effort though.</em></p>
+<p>Other features include visitor diversity (two shops may have the same number of check-ins but if one is specialized in Indian spices, it may be visited always by the same few people compared with the general crowd going to a grocery store) and information about the surroundings of each location, like the density of venues and their category repartition.</p>
+<p>Once we represented venues by these 30 numerical attribute, we had to find a way to measure the distance between two sets of venues. We tried various measures but here we describe the <a href="https://en.wikipedia.org/wiki/Earth_mover%27s_distance">Earth mover's distance</a> as it outperforms others. Each venues is a point in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>R</mi><mi>d</mi></msup></math> and it gives the minimum distance needed to move all venues from one neighborhood to coincide with venues in the other neighborhood</p>
+<h2 id="experimental-result">Experimental result</h2>
+<p>Given a query neighborhood in one city, we want to find an area in a target city which is the most similar. An naive way of doing it is to move circles of increasing radius over the whole city and stop at regular interval to compute distance, keeping the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math> smallest one.</p>
+<p>We then evaluate the relevance of returned regions by how well they overlap with ground truth data. To obtain such ground truth, we defined eight emblematic areas in Paris (such as <a href="https://en.wikipedia.org/wiki/Quartier_Pigalle">Pigalle</a> or the more academic <a href="https://en.wikipedia.org/wiki/Latin_Quarter,_Paris">Latin Quarter</a>) and asked reliable acquaintances who have lived in our chosen cities to provide equivalent locations. Below we show our three best results.</p>
+<figure>
+<img src="newyork_sanfrancisco_latin_emd.png" alt="Latin Quarter from New York to San Francisco using exhaustive search" /><figcaption>Latin Quarter from New York to San Francisco using exhaustive search</figcaption>
+</figure>
+<figure>
+<img src="paris_barcelona_official_emd.png" alt="“Official” Quarter from Paris to Barcelona using exhaustive search" /><figcaption>“Official” Quarter from Paris to Barcelona using exhaustive search</figcaption>
+</figure>
+<figure>
+<img src="paris_washington_marais_emd.png" alt="“Gay” Quarter from Paris to Washington using exhaustive search" /><figcaption>“Gay” Quarter from Paris to Washington using exhaustive search</figcaption>
+</figure>
+<p>Unfortunately, this exhaustive search takes a lot of time (about half-hour in New-York using four threads). Thus we developed an heuristic to avoid unnecessary computations. The idea is to prune the target city by keeping only venues which are similar to those in the query neighborhood and then regroup them into candidate regions. It generally give result whose similarity is almost as good, but with running time hundred times shorter. For instance here are three good results:</p>
+<figure>
+<img src="barcelona_rome_montmartre_femd.png" alt="Montmartre Quarter from Barcelona to Rome using heuristic search" /><figcaption>Montmartre Quarter from Barcelona to Rome using heuristic search</figcaption>
+</figure>
+<figure>
+<img src="paris_barcelona_official_femd.png" alt="“Official” Quarter from Paris to Barcelona using heuristic search" /><figcaption>“Official” Quarter from Paris to Barcelona using heuristic search</figcaption>
+</figure>
+<figure>
+<img src="washington_newyork_16th_femd.png" alt="“Expensive” Quarter from Washington to New York using heuristic search" /><figcaption>“Expensive” Quarter from Washington to New York using heuristic search</figcaption>
+</figure>
+<p><em>Case study from the paper with some screenshots?</em></p>
+<h2 id="outlook">Outlook</h2>
+<ul>
+<li>More data</li>
+<li>Automatic neighborhood detection</li>
+<li>Cities similarity by multiple matching</li>
+</ul>
+<p><em>link to the thesis for <a href="https://aaltodoc.aalto.fi/bitstream/handle/123456789/13900/master_Le_Falher_G%C3%A9raud_2014.pdf?sequence=1">an excruciating amount of supplementary details</a></em></p>
+</body>
+</html>
